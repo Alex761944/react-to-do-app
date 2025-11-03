@@ -13,10 +13,13 @@ function App() {
   }
 
   function toggleToDo(index) {
-    setToDos((prev) =>
-      prev.map((todo, i) =>
-        i === index ? { ...todo, isDone: !todo.isDone } : todo
-      )
+    setToDos((prevToDos) =>
+      prevToDos.map((todo, i) => {
+        if (i === index) {
+          return { ...todo, isDone: !todo.isDone };
+        }
+        return todo;
+      })
     );
   }
 
