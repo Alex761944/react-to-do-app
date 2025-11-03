@@ -3,22 +3,35 @@ import "./App.css";
 import { ToDo } from "./components/ToDo/ToDo";
 
 function App() {
-  const [toDos, setToDos] = useState([
-    {
-      isDone: false,
-      text: "First ToDo",
-    },
-    {
-      isDone: true,
-      text: "Second ToDo",
-    },
-  ]);
+  const [toDos, setToDos] = useState([]);
+
+  function addToDo() {
+    setToDos((prev) => [
+      ...prev,
+      { isDone: false, text: `New ToDo #${prev.length + 1}` },
+    ]);
+  }
+
+  function toggleToDo(index) {
+    setToDos((prev) =>
+      prev.map((todo, i) =>
+        i === index ? { ...todo, isDone: !todo.isDone } : todo
+      )
+    );
+  }
 
   return (
     <>
-      {toDos.map((toDo, index) => {
-        return <ToDo isDone={toDo.isDone} text={toDo.text} key={index} />;
-      })}
+      {toDos.map((toDo, index) => (
+        <ToDo
+          key={index}
+          isDone={toDo.isDone}
+          text={toDo.text}
+          onToggle={() => toggleToDo(index)}
+        />
+      ))}
+
+      <button onClick={addToDo}>Add To Do</button>
     </>
   );
 }

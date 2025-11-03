@@ -3,3 +3,9 @@
   align-items: center;
   gap: 4px;
 }
+
+.ToDo--done p {
+  text-decoration: line-through;
+  color: #888;
+  transition: color 0.2s ease;
+}

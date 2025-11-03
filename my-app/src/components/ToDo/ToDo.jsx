@@ -1,13 +1,9 @@
 import "./ToDo.css";
 
-function handleChange(event) {
-  console.log(event);
-}
-
-export function ToDo({ isDone, text }) {
+export function ToDo({ isDone, text, onToggle }) {
   return (
-    <div className="ToDo">
-      <input type="checkbox" checked={isDone} onChange={handleChange} />
+    <div className={`ToDo ${isDone ? "ToDo--done" : ""}`}>
+      <input type="checkbox" checked={isDone} onChange={onToggle} />
       <p>{text}</p>
     </div>
   );
