@@ -30,6 +30,18 @@ function App() {
     );
   }
 
+  function deleteToDo(index) {
+    const newToDos = toDos.filter((toDo, i) => {
+      if (index === i) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    setToDos(newToDos);
+  }
+
   return (
     <>
       <ToDoList>
@@ -39,6 +51,7 @@ function App() {
             isDone={toDo.isDone}
             text={toDo.text}
             onToggle={() => toggleToDo(index)}
+            handleTrashcanClick={() => deleteToDo(index)}
             isInEditMode={toDo.isInEditMode}
           />
         ))}
