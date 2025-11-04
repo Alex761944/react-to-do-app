@@ -1,12 +1,16 @@
 .ToDo {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--size-s);
   cursor: pointer;
 }
 
 .ToDo--Done p {
   text-decoration: line-through;
-  color: #888;
+  color: var(--text-color-done);
   transition: color 0.2s ease;
+}
+
+.ToDoInput {
+  border-radius: var(--border-radius);
 }
