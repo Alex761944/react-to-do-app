@@ -44,7 +44,9 @@ function App() {
         ))}
       </ToDoList>
 
-      <button onClick={addToDo}>Add To Do</button>
+      <button className="Button" onClick={addToDo}>
+        Add To Do
+      </button>
     </>
   );
 }

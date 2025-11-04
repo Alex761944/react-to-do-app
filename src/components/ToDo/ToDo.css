@@ -1,8 +1,10 @@
 .ToDo {
   display: flex;
   align-items: center;
+  padding: var(--size-m);
   gap: var(--size-s);
   cursor: pointer;
+  outline: 1px dashed white;
 }
 
 .ToDo--Done p {
@@ -13,4 +15,10 @@
 
 .ToDoInput {
   border-radius: var(--border-radius);
+  padding: var(--size-s);
+}
+
+.ToDo .Button--Icon {
+  padding: 0;
+  background: none;
 }
