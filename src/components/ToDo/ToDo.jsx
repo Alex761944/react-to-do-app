@@ -8,6 +8,7 @@ export function ToDo({
   isInEditMode,
   handleCheckmarkClick,
   handleTrashcanClick,
+  handleEditClick,
 }) {
   return (
     <label className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
@@ -26,7 +27,7 @@ export function ToDo({
         />
       )}
 
-      <Button icon="edit" variant="icon" />
+      <Button icon="edit" variant="icon" onClick={handleEditClick} />
       <Button icon="trashcan" variant="icon" onClick={handleTrashcanClick} />
     </label>
   );
