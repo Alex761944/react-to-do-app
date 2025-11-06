@@ -1,18 +1,21 @@
 import "./ToDo.css";
 import { Button } from "../Button/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function ToDo({
   isDone,
   text,
   onToggle,
   isInEditMode,
-  onTextChange,
   handleCheckmarkClick,
   handleTrashcanClick,
   handleEditClick,
 }) {
   const [inputValue, setInputValue] = useState(text);
+
+  useEffect(() => {
+    setInputValue(text);
+  }, [text]);
 
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
