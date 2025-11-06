@@ -30,6 +30,14 @@ function App() {
     );
   }
 
+  function saveToDo(index, newText) {
+    setToDos((prevToDos) =>
+      prevToDos.map((todo, i) =>
+        i === index ? { ...todo, text: newText, isInEditMode: false } : todo
+      )
+    );
+  }
+
   function deleteToDo(index) {
     const newToDos = toDos.filter((toDo, i) => {
       if (index === i) {
@@ -42,6 +50,8 @@ function App() {
     setToDos(newToDos);
   }
 
+  function updateText(text) {}
+
   return (
     <>
       <ToDoList>
@@ -53,6 +63,7 @@ function App() {
             onToggle={() => toggleToDo(index)}
             handleTrashcanClick={() => deleteToDo(index)}
             isInEditMode={toDo.isInEditMode}
+            handleCheckmarkClick={(newText) => saveToDo(index, newText)}
           />
         ))}
       </ToDoList>
