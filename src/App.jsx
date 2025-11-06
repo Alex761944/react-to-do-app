@@ -47,7 +47,7 @@ function App() {
   }
 
   function deleteToDo(index) {
-    const newToDos = toDos.filter((toDo, i) => {
+    const newToDos = toDos.filter((_, i) => {
       if (index === i) {
         return false;
       } else {
@@ -57,8 +57,6 @@ function App() {
 
     setToDos(newToDos);
   }
-
-  function updateText(text) {}
 
   return (
     <>
