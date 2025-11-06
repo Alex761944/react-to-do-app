@@ -64,16 +64,17 @@ function App() {
     <>
       <ToDoList>
         {toDos.map((toDo, index) => (
-          <ToDo
-            key={index}
-            isDone={toDo.isDone}
-            text={toDo.text}
-            onToggle={() => toggleToDo(index)}
-            handleTrashcanClick={() => deleteToDo(index)}
-            handleCheckmarkClick={(newText) => saveToDo(index, newText)}
-            handleEditClick={() => editToDo(index)}
-            isInEditMode={toDo.isInEditMode}
-          />
+          <li key={index}>
+            <ToDo
+              isDone={toDo.isDone}
+              text={toDo.text}
+              onToggle={() => toggleToDo(index)}
+              handleTrashcanClick={() => deleteToDo(index)}
+              handleSave={(newText) => saveToDo(index, newText)}
+              handleEditClick={() => editToDo(index)}
+              isInEditMode={toDo.isInEditMode}
+            />
+          </li>
         ))}
       </ToDoList>
 

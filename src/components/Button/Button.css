@@ -10,6 +10,11 @@
   transition: border-color 0.25s;
 }
 
+.Button--Icon {
+  padding: 0;
+  background: none;
+}
+
 button:hover {
   border-color: #646cff;
 }

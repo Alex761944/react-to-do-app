@@ -1,24 +1,24 @@
 .ToDo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: var(--size-m);
-  gap: var(--size-s);
-  cursor: pointer;
+  gap: var(--size-l);
   outline: 1px dashed white;
 }
 
-.ToDo--Done p {
-  text-decoration: line-through;
-  color: var(--text-color-done);
-  transition: color 0.2s ease;
+.ToDo__Content {
+  display: flex;
+  gap: var(--size-s);
+  cursor: pointer;
 }
 
-.ToDoInput {
+.ToDo__Actions {
+  display: flex;
+  gap: var(--size-s);
+}
+
+.ToDo__Input {
   border-radius: var(--border-radius);
   padding: var(--size-s);
-}
-
-.ToDo .Button--Icon {
-  padding: 0;
-  background: none;
 }

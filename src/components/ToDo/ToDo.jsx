@@ -1,13 +1,13 @@
 import "./ToDo.css";
 import { Button } from "../Button/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function ToDo({
   isDone,
   text,
   onToggle,
   isInEditMode,
-  handleCheckmarkClick,
+  handleSave,
   handleTrashcanClick,
   handleEditClick,
 }) {
@@ -17,30 +17,49 @@ export function ToDo({
     setInputValue(text);
   }, [text]);
 
+  useEffect(() => {
+    if (isInEditMode) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [isInEditMode]);
+
+  const inputRef = useRef();
+
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
-      <input type="checkbox" checked={isDone} onChange={onToggle} />
-      {isInEditMode ? (
-        <input
-          className="ToDoInput"
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-      ) : (
-        <p>{text}</p>
-      )}
+      <label className="ToDo__Content">
+        <input type="checkbox" checked={isDone} onChange={onToggle} />
+        {isInEditMode ? (
+          <form onSubmit={() => handleSave(inputValue)}>
+            <input
+              className="ToDo__Input"
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              ref={inputRef}
+            />
+          </form>
+        ) : isDone ? (
+          <del>{text}</del>
+        ) : (
+          <p>{text}</p>
+        )}
+      </label>
 
-      {isInEditMode && (
-        <Button
-          icon="checkmark"
-          variant="icon"
-          onClick={() => handleCheckmarkClick(inputValue)}
-        />
-      )}
+      <div className="ToDo__Actions">
+        {isInEditMode ? (
+          <Button
+            icon="checkmark"
+            variant="icon"
+            onClick={() => handleSave(inputValue)}
+          />
+        ) : (
+          <Button icon="edit" variant="icon" onClick={handleEditClick} />
+        )}
 
-      <Button icon="edit" variant="icon" onClick={handleEditClick} />
-      <Button icon="trashcan" variant="icon" onClick={handleTrashcanClick} />
+        <Button icon="trashcan" variant="icon" onClick={handleTrashcanClick} />
+      </div>
     </div>
   );
 }

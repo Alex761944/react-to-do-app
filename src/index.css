@@ -13,7 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Put css variables here */
-  --text-color-done: #888;
+  --text-color-muted: #888;
 
   --size-s: 4px;
   --size-m: 8px;
@@ -47,6 +47,16 @@ h1 {
 
 p {
   margin: 0;
+}
+
+del {
+  color: var(--text-color-muted);
+}
+
+.u-NoList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media (prefers-color-scheme: light) {
