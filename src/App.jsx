@@ -8,6 +8,29 @@ const sortOptions = [
   { label: "Date Descending", value: "date-descending" },
 ];
 
+const priorityOptions = [
+  {
+    label: "High",
+    value: "high",
+  },
+  {
+    label: "Medium",
+    value: "medium",
+  },
+  {
+    label: "Low",
+    value: "low",
+  },
+];
+
+// Render these options as inputs(checkmark) on the right side of ordering
+
+// Implement state variable for selected priority options
+
+// Handle clicking priority options, filter todos accordingly
+
+// Save selected filter options in local storage
+
 function App() {
   const [toDos, setToDos] = useState(
     JSON.parse(localStorage.getItem("to-dos")) || []
@@ -93,6 +116,13 @@ function App() {
           </option>
         ))}
       </select>
+
+      {priorityOptions.map((priorityOption, index) => (
+        <label key={index}>
+          <input type="checkbox" value={priorityOption.value} />
+          <p>{priorityOption.label}</p>
+        </label>
+      ))}
 
       <ToDoList>
         {toDos.sort(sortFunction).map((toDo, index) => (
