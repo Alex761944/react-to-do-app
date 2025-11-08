@@ -3,6 +3,11 @@ import "./App.css";
 import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
 
+const sortOptions = [
+  { label: "Date Ascending", value: "date-ascending" },
+  { label: "Date Descending", value: "date-descending" },
+];
+
 function App() {
   const [toDos, setToDos] = useState(
     JSON.parse(localStorage.getItem("to-dos")) || []
@@ -12,10 +17,18 @@ function App() {
     localStorage.setItem("to-dos", JSON.stringify(toDos));
   }, [toDos]);
 
+  const [selectedSortOption, setSelectedSortOption] = useState(
+    localStorage.getItem("selected-sort-option") || "date-ascending"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("selected-sort-option", selectedSortOption);
+  }, [selectedSortOption]);
+
   function addToDo() {
     setToDos((prev) => [
       ...prev,
-      { isDone: false, text: ``, isInEditMode: true },
+      { isDone: false, text: ``, isInEditMode: true, createdAt: new Date() },
     ]);
   }
 
@@ -58,10 +71,31 @@ function App() {
     setToDos(newToDos);
   }
 
+  function sortFunction(toDoA, toDoB) {
+    if (selectedSortOption === "date-ascending") {
+      return toDoA.createdAt > toDoB.createdAt ? 1 : -1;
+    } else {
+      return toDoA.createdAt < toDoB.createdAt ? 1 : -1;
+    }
+  }
+
   return (
     <>
+      <select
+        value={selectedSortOption}
+        onChange={(event) => {
+          setSelectedSortOption(event.target.value);
+        }}
+      >
+        {sortOptions.map((sortOption, index) => (
+          <option key={index} value={sortOption.value}>
+            {sortOption.label}
+          </option>
+        ))}
+      </select>
+
       <ToDoList>
-        {toDos.map((toDo, index) => (
+        {toDos.sort(sortFunction).map((toDo, index) => (
           <li key={index}>
             <ToDo
               isDone={toDo.isDone}
