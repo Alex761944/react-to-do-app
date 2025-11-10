@@ -10,7 +10,7 @@ const sortOptions = [
   { label: "Date Descending", value: "date-descending" },
 ];
 
-const priorityOptions = [
+export const priorityOptions = [
   {
     label: "High",
     value: "high",
@@ -24,8 +24,6 @@ const priorityOptions = [
     value: "low",
   },
 ];
-
-// Implement state variable for selected priority options
 
 // Handle clicking priority options, filter todos accordingly
 
@@ -48,10 +46,20 @@ function App() {
     localStorage.setItem("selected-sort-option", selectedSortOption);
   }, [selectedSortOption]);
 
+  const [selectedFilters, setSelectedFilters] = useState(
+    JSON.parse(localStorage.getItem("selected-filters")) || []
+  );
+
   function addToDo() {
     setToDos((prev) => [
       ...prev,
-      { isDone: false, text: ``, isInEditMode: true, createdAt: new Date() },
+      {
+        isDone: false,
+        text: ``,
+        isInEditMode: true,
+        createdAt: new Date(),
+        priority: "medium",
+      },
     ]);
   }
 
@@ -66,10 +74,12 @@ function App() {
     );
   }
 
-  function saveToDo(index, newText) {
+  function saveToDo(index, newText, priority) {
     setToDos((prevToDos) =>
       prevToDos.map((toDo, i) =>
-        i === index ? { ...toDo, text: newText, isInEditMode: false } : toDo
+        i === index
+          ? { ...toDo, text: newText, isInEditMode: false, priority: priority }
+          : toDo
       )
     );
   }
@@ -142,9 +152,12 @@ function App() {
             <ToDo
               isDone={toDo.isDone}
               text={toDo.text}
+              priority={toDo.priority}
               onToggle={() => toggleToDo(index)}
               handleTrashcanClick={() => deleteToDo(index)}
-              handleSave={(newText) => saveToDo(index, newText)}
+              handleSave={(newText, priority) =>
+                saveToDo(index, newText, priority)
+              }
               handleEditClick={() => editToDo(index)}
               isInEditMode={toDo.isInEditMode}
             />

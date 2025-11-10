@@ -3,17 +3,20 @@ import { Button } from "../Button/Button";
 import { useState, useEffect, useRef } from "react";
 import { Text } from "..//Text/Text";
 import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
+import { priorityOptions } from "../../App";
 
 export function ToDo({
-  isDone,
   text,
-  onToggle,
+  priority,
+  isDone,
   isInEditMode,
+  onToggle,
   handleSave,
   handleTrashcanClick,
   handleEditClick,
 }) {
   const [inputValue, setInputValue] = useState(text);
+  const [currentPriority, setCurrentPriority] = useState(priority);
 
   useEffect(() => {
     setInputValue(text);
@@ -30,15 +33,25 @@ export function ToDo({
 
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
+      <select
+        value={currentPriority}
+        onChange={(event) => setCurrentPriority(event.target.value)}
+      >
+        {priorityOptions.map((priorityOption, index) => (
+          <option key={index} value={priorityOption.value}>
+            {priorityOption.label}
+          </option>
+        ))}
+      </select>
       <label className="ToDo__Content">
         <input type="checkbox" checked={isDone} onChange={onToggle} />
         {isInEditMode ? (
-          <form onSubmit={() => handleSave(inputValue)}>
+          <form onSubmit={() => handleSave(inputValue, currentPriority)}>
             <input
               className="ToDo__Input"
               type="text"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={(event) => setInputValue(event.target.value)}
               ref={inputRef}
             />
           </form>
@@ -54,7 +67,7 @@ export function ToDo({
           <Button
             icon={<CheckSquare color="var(--success)" />}
             variant="icon"
-            onClick={() => handleSave(inputValue)}
+            onClick={() => handleSave(inputValue, currentPriority)}
           />
         ) : (
           <Button
