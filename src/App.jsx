@@ -23,8 +23,6 @@ const priorityOptions = [
   },
 ];
 
-// Render these options as inputs(checkmark) on the right side of ordering
-
 // Implement state variable for selected priority options
 
 // Handle clicking priority options, filter todos accordingly
@@ -104,25 +102,29 @@ function App() {
 
   return (
     <>
-      <select
-        value={selectedSortOption}
-        onChange={(event) => {
-          setSelectedSortOption(event.target.value);
-        }}
-      >
-        {sortOptions.map((sortOption, index) => (
-          <option key={index} value={sortOption.value}>
-            {sortOption.label}
-          </option>
-        ))}
-      </select>
+      <div className="Navigation">
+        <select
+          value={selectedSortOption}
+          onChange={(event) => {
+            setSelectedSortOption(event.target.value);
+          }}
+        >
+          {sortOptions.map((sortOption, index) => (
+            <option key={index} value={sortOption.value}>
+              {sortOption.label}
+            </option>
+          ))}
+        </select>
 
-      {priorityOptions.map((priorityOption, index) => (
-        <label key={index}>
-          <input type="checkbox" value={priorityOption.value} />
-          <p>{priorityOption.label}</p>
-        </label>
-      ))}
+        <div className="Navigation__Prioritys">
+          {priorityOptions.map((priorityOption, index) => (
+            <label key={index}>
+              <input type="checkbox" value={priorityOption.value} />
+              <p>{priorityOption.label}</p>
+            </label>
+          ))}
+        </div>
+      </div>
 
       <ToDoList>
         {toDos.sort(sortFunction).map((toDo, index) => (

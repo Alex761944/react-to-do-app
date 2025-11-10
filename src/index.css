@@ -71,3 +71,13 @@ del {
     background-color: #f9f9f9;
   }
 }
+
+.Navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Navigation__Prioritys {
+  display: flex;
+  gap: var(--size-m);
+}
