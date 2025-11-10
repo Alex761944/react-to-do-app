@@ -3,6 +3,7 @@ import "./App.css";
 import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
 import { Text } from "./components/Text/Text";
+import { Button } from "./components/Button/Button";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -151,9 +152,7 @@ function App() {
         ))}
       </ToDoList>
 
-      <button className="Button" onClick={addToDo}>
-        Add To Do
-      </button>
+      <Button onClick={addToDo}>Add To Do</Button>
     </>
   );
 }
