@@ -103,8 +103,12 @@ function App() {
 
   return (
     <>
-      <Text as="h1" variant="Heading">
+      <Text as="h1" variant="HeadingLarge">
         To-Do List
+      </Text>
+
+      <Text as="h2" variant="HeadingSmall">
+        Organize your tasks and stay productive.
       </Text>
 
       <div className="Navigation">
