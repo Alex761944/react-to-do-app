@@ -2,6 +2,7 @@ import "./ToDo.css";
 import { Button } from "../Button/Button";
 import { useState, useEffect, useRef } from "react";
 import { Text } from "..//Text/Text";
+import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
 
 export function ToDo({
   isDone,
@@ -51,15 +52,23 @@ export function ToDo({
       <div className="ToDo__Actions">
         {isInEditMode ? (
           <Button
-            icon="checkmark"
+            icon={<CheckSquare color="var(--success)" />}
             variant="icon"
             onClick={() => handleSave(inputValue)}
           />
         ) : (
-          <Button icon="edit" variant="icon" onClick={handleEditClick} />
+          <Button
+            icon={<SquarePen color="var(--warning)" />}
+            variant="icon"
+            onClick={handleEditClick}
+          />
         )}
 
-        <Button icon="trashcan" variant="icon" onClick={handleTrashcanClick} />
+        <Button
+          icon={<Trash2 color="var(--danger)" />}
+          variant="icon"
+          onClick={handleTrashcanClick}
+        />
       </div>
     </div>
   );

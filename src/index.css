@@ -15,6 +15,10 @@
   /* Put css variables here */
   --text-color-muted: #888;
 
+  --success: rgb(115, 255, 115);
+  --warning: rgb(255, 201, 101);
+  --danger: rgb(255, 120, 120);
+
   --size-s: 4px;
   --size-m: 8px;
   --size-l: 16px;
