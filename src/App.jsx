@@ -125,7 +125,7 @@ function App() {
           {priorityOptions.map((priorityOption, index) => (
             <label key={index}>
               <input type="checkbox" value={priorityOption.value} />
-              <p>{priorityOption.label}</p>
+              <Text as="p">{priorityOption.label}</Text>
             </label>
           ))}
         </div>

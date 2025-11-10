@@ -1,6 +1,7 @@
 import "./ToDo.css";
 import { Button } from "../Button/Button";
 import { useState, useEffect, useRef } from "react";
+import { Text } from "..//Text/Text";
 
 export function ToDo({
   isDone,
@@ -41,9 +42,9 @@ export function ToDo({
             />
           </form>
         ) : isDone ? (
-          <del>{text}</del>
+          <Text as="del">{text}</Text>
         ) : (
-          <p>{text}</p>
+          <Text as="p">{text}</Text>
         )}
       </label>
 
