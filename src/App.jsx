@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
+import { Text } from "./components/Text/Text";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -102,6 +103,10 @@ function App() {
 
   return (
     <>
+      <Text as="h1" variant="Heading">
+        To-Do List
+      </Text>
+
       <div className="Navigation">
         <select
           value={selectedSortOption}
