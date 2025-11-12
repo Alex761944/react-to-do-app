@@ -25,10 +25,6 @@ export const priorityOptions = [
   },
 ];
 
-// Handle clicking priority options, filter todos accordingly
-
-// Save selected filter options in local storage
-
 function App() {
   const [toDos, setToDos] = useState(
     JSON.parse(localStorage.getItem("to-dos")) || []
@@ -49,6 +45,10 @@ function App() {
   const [selectedFilters, setSelectedFilters] = useState(
     JSON.parse(localStorage.getItem("selected-filters")) || []
   );
+
+  useEffect(() => {
+    localStorage.setItem("selected-filters", JSON.stringify(selectedFilters));
+  }, [selectedFilters]);
 
   function addToDo() {
     setToDos((prev) => [
@@ -139,7 +139,21 @@ function App() {
         <div className="Navigation__Prioritys">
           {priorityOptions.map((priorityOption, index) => (
             <label key={index}>
-              <input type="checkbox" value={priorityOption.value} />
+              <input
+                type="checkbox"
+                value={priorityOption.value}
+                checked={selectedFilters.includes(priorityOption.value)}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  setSelectedFilters((prevFilters) => {
+                    if (prevFilters.includes(value)) {
+                      return prevFilters.filter((filter) => filter !== value);
+                    } else {
+                      return [...prevFilters, value];
+                    }
+                  });
+                }}
+              />
               <Text as="p">{priorityOption.label}</Text>
             </label>
           ))}
@@ -147,22 +161,29 @@ function App() {
       </div>
 
       <ToDoList>
-        {toDos.sort(sortFunction).map((toDo, index) => (
-          <li key={index}>
-            <ToDo
-              isDone={toDo.isDone}
-              text={toDo.text}
-              priority={toDo.priority}
-              onToggle={() => toggleToDo(index)}
-              handleTrashcanClick={() => deleteToDo(index)}
-              handleSave={(newText, priority) =>
-                saveToDo(index, newText, priority)
-              }
-              handleEditClick={() => editToDo(index)}
-              isInEditMode={toDo.isInEditMode}
-            />
-          </li>
-        ))}
+        {toDos
+          .filter(
+            (todo) =>
+              selectedFilters.length === 0 ||
+              selectedFilters.includes(todo.priority)
+          )
+          .sort(sortFunction)
+          .map((toDo, index) => (
+            <li key={index}>
+              <ToDo
+                isDone={toDo.isDone}
+                text={toDo.text}
+                priority={toDo.priority}
+                onToggle={() => toggleToDo(index)}
+                handleTrashcanClick={() => deleteToDo(index)}
+                handleSave={(newText, priority) =>
+                  saveToDo(index, newText, priority)
+                }
+                handleEditClick={() => editToDo(index)}
+                isInEditMode={toDo.isInEditMode}
+              />
+            </li>
+          ))}
       </ToDoList>
 
       <Button onClick={addToDo}>Add To Do</Button>
