@@ -1,4 +1,5 @@
 .ToDo {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -21,4 +22,15 @@
 .ToDo__Input {
   border-radius: var(--border-radius);
   padding: var(--size-s);
+}
+
+.ToDo__PriorityIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--indicator-color);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
 }

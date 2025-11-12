@@ -55,7 +55,7 @@ function App() {
       ...prev,
       {
         isDone: false,
-        text: ``,
+        text: `New To Do`,
         isInEditMode: true,
         createdAt: new Date(),
         priority: "medium",
@@ -63,38 +63,38 @@ function App() {
     ]);
   }
 
-  function toggleToDo(index) {
+  function toggleToDo(timestamp) {
     setToDos((prevToDos) =>
-      prevToDos.map((todo, i) => {
-        if (i === index) {
-          return { ...todo, isDone: !todo.isDone };
+      prevToDos.map((toDo) => {
+        if (toDo.createdAt === timestamp) {
+          return { ...toDo, isDone: !toDo.isDone };
         }
-        return todo;
+        return toDo;
       })
     );
   }
 
-  function saveToDo(index, newText, priority) {
+  function saveToDo(timestamp, newText, priority) {
     setToDos((prevToDos) =>
-      prevToDos.map((toDo, i) =>
-        i === index
+      prevToDos.map((toDo) =>
+        toDo.createdAt === timestamp
           ? { ...toDo, text: newText, isInEditMode: false, priority: priority }
           : toDo
       )
     );
   }
 
-  function editToDo(index) {
+  function editToDo(timestamp) {
     setToDos((prevToDos) =>
-      prevToDos.map((toDo, i) =>
-        i === index ? { ...toDo, isInEditMode: true } : toDo
+      prevToDos.map((toDo) =>
+        toDo.createdAt === timestamp ? { ...toDo, isInEditMode: true } : toDo
       )
     );
   }
 
-  function deleteToDo(index) {
-    const newToDos = toDos.filter((_, i) => {
-      if (index === i) {
+  function deleteToDo(timestamp) {
+    const newToDos = toDos.filter((toDo) => {
+      if (toDo.createdAt === timestamp) {
         return false;
       } else {
         return true;
@@ -170,18 +170,20 @@ function App() {
               selectedFilters.includes(todo.priority)
           )
           .sort(sortFunction)
-          .map((toDo, index) => (
-            <li key={index}>
+          .map((toDo) => (
+            <li key={toDo.createdAt}>
               <ToDo
                 isDone={toDo.isDone}
                 text={toDo.text}
                 priority={toDo.priority}
-                onToggle={() => toggleToDo(index)}
-                handleTrashcanClick={() => deleteToDo(index)}
+                onToggle={() => toggleToDo(toDo.createdAt)}
+                handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
                 handleSave={(newText, priority) =>
-                  saveToDo(index, newText, priority)
+                  saveToDo(toDo.createdAt, newText, priority)
                 }
-                handleEditClick={() => editToDo(index)}
+                handleEditClick={() => {
+                  editToDo(toDo.createdAt);
+                }}
                 isInEditMode={toDo.isInEditMode}
               />
             </li>

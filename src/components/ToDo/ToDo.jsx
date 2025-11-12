@@ -31,9 +31,18 @@ export function ToDo({
 
   const inputRef = useRef();
 
+  let indicatorColor = null;
+  if (priority === "high") {
+    indicatorColor = "var(--danger)";
+  } else if (priority === "medium") {
+    indicatorColor = "var(--warning)";
+  } else if (priority === "low") {
+    indicatorColor = "var(--success)";
+  }
+
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
-      {isInEditMode && (
+      {isInEditMode ? (
         <select
           value={currentPriority}
           onChange={(event) => setCurrentPriority(event.target.value)}
@@ -44,6 +53,11 @@ export function ToDo({
             </option>
           ))}
         </select>
+      ) : (
+        <div
+          className="ToDo__PriorityIndicator"
+          style={{ "--indicator-color": indicatorColor }}
+        ></div>
       )}
 
       <label className="ToDo__Content">
