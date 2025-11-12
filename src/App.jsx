@@ -144,12 +144,14 @@ function App() {
                 value={priorityOption.value}
                 checked={selectedFilters.includes(priorityOption.value)}
                 onChange={(event) => {
-                  const value = event.target.value;
+                  const priority = event.target.value;
                   setSelectedFilters((prevFilters) => {
-                    if (prevFilters.includes(value)) {
-                      return prevFilters.filter((filter) => filter !== value);
+                    if (prevFilters.includes(priority)) {
+                      return prevFilters.filter(
+                        (filter) => filter !== priority
+                      );
                     } else {
-                      return [...prevFilters, value];
+                      return [...prevFilters, priority];
                     }
                   });
                 }}
