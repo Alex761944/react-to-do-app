@@ -33,16 +33,19 @@ export function ToDo({
 
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
-      <select
-        value={currentPriority}
-        onChange={(event) => setCurrentPriority(event.target.value)}
-      >
-        {priorityOptions.map((priorityOption, index) => (
-          <option key={index} value={priorityOption.value}>
-            {priorityOption.label}
-          </option>
-        ))}
-      </select>
+      {isInEditMode && (
+        <select
+          value={currentPriority}
+          onChange={(event) => setCurrentPriority(event.target.value)}
+        >
+          {priorityOptions.map((priorityOption, index) => (
+            <option key={index} value={priorityOption.value}>
+              {priorityOption.label}
+            </option>
+          ))}
+        </select>
+      )}
+
       <label className="ToDo__Content">
         <input type="checkbox" checked={isDone} onChange={onToggle} />
         {isInEditMode ? (
