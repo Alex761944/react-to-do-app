@@ -88,15 +88,12 @@ del {
 
 .FilterBadge {
   cursor: pointer;
-  position: relative;
 }
 
-/* checkbox verstecken */
 .FilterBadge input[type="checkbox"] {
   display: none;
 }
 
-/* pill */
 .FilterBadge__Text {
   padding: 8px 16px;
   border-radius: 9999px;
@@ -104,7 +101,6 @@ del {
   border-color: var(--filter-badge-border);
 }
 
-/* active pill */
 .FilterBadge input[type="checkbox"]:checked + .FilterBadge__Text {
   background: var(--filter-badge-active);
   border-color: white;
