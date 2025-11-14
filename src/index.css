@@ -101,6 +101,7 @@ del {
   padding: 8px 16px;
   border-radius: 9999px;
   border: 2px solid white;
+  border-color: var(--filter-badge-border);
 }
 
 /* active pill */

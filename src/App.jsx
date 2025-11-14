@@ -146,6 +146,7 @@ function App() {
               className="FilterBadge"
               style={{
                 "--filter-badge-active": priorityOption.color,
+                "--filter-badge-border": priorityOption.color,
               }}
             >
               <input
