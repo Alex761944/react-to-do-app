@@ -7,6 +7,7 @@ import { Button } from "./components/Button/Button";
 import { ToDoListHeader } from "./components/ToDoListHeader/ToDoListHeader";
 import { FilterList } from "./components/FilterList/FilterList";
 import { Badge } from "./components/Badge/Badge";
+import { Filter } from "./components/Filter/Filter";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -118,6 +119,16 @@ function App() {
     }
   }
 
+  function handleFilterChange(value) {
+    setSelectedFilters((prevFilters) => {
+      if (prevFilters.includes(value)) {
+        return prevFilters.filter((filter) => filter !== value);
+      } else {
+        return [...prevFilters, value];
+      }
+    });
+  }
+
   return (
     <>
       <Text as="h1" variant="HeadingLarge">
@@ -145,31 +156,20 @@ function App() {
         <FilterList>
           {priorityOptions.map((priorityOption, index) => (
             <li key={index}>
-              <label>
-                <input
-                  className="u-Hidden"
-                  type="checkbox"
-                  value={priorityOption.value}
-                  checked={selectedFilters.includes(priorityOption.value)}
-                  onChange={(event) => {
-                    const priority = event.target.value;
-                    setSelectedFilters((prevFilters) => {
-                      if (prevFilters.includes(priority)) {
-                        return prevFilters.filter(
-                          (filter) => filter !== priority
-                        );
-                      } else {
-                        return [...prevFilters, priority];
-                      }
-                    });
-                  }}
-                />
+              <Filter
+                value={priorityOption.value}
+                active={selectedFilters.includes(priorityOption.value)}
+                onChange={(event) => {
+                  const priority = event.target.value;
+                  handleFilterChange(priority);
+                }}
+              >
                 <Badge
                   text={priorityOption.label}
                   highlightColor={priorityOption.color}
                   hasActiveState={true}
                 />
-              </label>
+              </Filter>
             </li>
           ))}
         </FilterList>
