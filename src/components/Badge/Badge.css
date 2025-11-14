@@ -1,0 +1,13 @@
+.Badge {
+  cursor: pointer;
+  padding: var(--size-xs) var(--size-m);
+  border-radius: var(--border-radius-max);
+  border: 1px solid var(--badge-highlight-color);
+}
+
+.Badge--HasActiveState:hover,
+.Badge--HasActiveState:is(input[type="checkbox"]:checked + .Badge) {
+  background: var(--badge-highlight-color);
+  border-color: var(--badge-border-active-color);
+  color: var(--badge-text-color);
+}

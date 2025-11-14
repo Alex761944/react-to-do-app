@@ -4,6 +4,9 @@ import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
 import { Text } from "./components/Text/Text";
 import { Button } from "./components/Button/Button";
+import { ToDoListHeader } from "./components/ToDoListHeader/ToDoListHeader";
+import { FilterList } from "./components/FilterList/FilterList";
+import { Badge } from "./components/Badge/Badge";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -125,7 +128,7 @@ function App() {
         Organize your tasks and stay productive.
       </Text>
 
-      <div className="Navigation">
+      <ToDoListHeader>
         <select
           value={selectedSortOption}
           onChange={(event) => {
@@ -139,40 +142,38 @@ function App() {
           ))}
         </select>
 
-        <div className="Navigation__Prioritys">
+        <FilterList>
           {priorityOptions.map((priorityOption, index) => (
-            <label
-              key={index}
-              className="FilterBadge"
-              style={{
-                "--filter-badge-active": priorityOption.color,
-                "--filter-badge-border": priorityOption.color,
-              }}
-            >
-              <input
-                type="checkbox"
-                value={priorityOption.value}
-                checked={selectedFilters.includes(priorityOption.value)}
-                onChange={(event) => {
-                  const priority = event.target.value;
-                  setSelectedFilters((prevFilters) => {
-                    if (prevFilters.includes(priority)) {
-                      return prevFilters.filter(
-                        (filter) => filter !== priority
-                      );
-                    } else {
-                      return [...prevFilters, priority];
-                    }
-                  });
-                }}
-              />
-              <Text as="span" className={`FilterBadge__Text`}>
-                {priorityOption.label}
-              </Text>
-            </label>
+            <li key={index}>
+              <label>
+                <input
+                  className="u-Hidden"
+                  type="checkbox"
+                  value={priorityOption.value}
+                  checked={selectedFilters.includes(priorityOption.value)}
+                  onChange={(event) => {
+                    const priority = event.target.value;
+                    setSelectedFilters((prevFilters) => {
+                      if (prevFilters.includes(priority)) {
+                        return prevFilters.filter(
+                          (filter) => filter !== priority
+                        );
+                      } else {
+                        return [...prevFilters, priority];
+                      }
+                    });
+                  }}
+                />
+                <Badge
+                  text={priorityOption.label}
+                  highlightColor={priorityOption.color}
+                  hasActiveState={true}
+                />
+              </label>
+            </li>
           ))}
-        </div>
-      </div>
+        </FilterList>
+      </ToDoListHeader>
 
       <ToDoList>
         {toDos

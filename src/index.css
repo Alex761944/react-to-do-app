@@ -19,11 +19,19 @@
   --warning: rgb(255, 201, 101);
   --danger: rgb(255, 120, 120);
 
+  --size-xs: 2px;
   --size-s: 4px;
   --size-m: 8px;
   --size-l: 16px;
 
   --border-radius: 8px;
+  --border-radius-max: 100vmax;
+
+  /* Components */
+
+  /* Badge */
+  --badge-text-color: rgb(255, 255, 255);
+  --badge-border-active-color: rgb(255, 255, 255);
 }
 
 a {
@@ -44,17 +52,16 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 p {
   margin: 0;
 }
 
 del {
   color: var(--text-color-muted);
+}
+
+.u-Hidden {
+  display: none !important;
 }
 
 .u-NoList {
@@ -74,35 +81,4 @@ del {
   button {
     background-color: #f9f9f9;
   }
-}
-
-.Navigation {
-  display: flex;
-  justify-content: space-between;
-}
-
-.Navigation__Prioritys {
-  display: flex;
-  gap: var(--size-m);
-}
-
-.FilterBadge {
-  cursor: pointer;
-}
-
-.FilterBadge input[type="checkbox"] {
-  display: none;
-}
-
-.FilterBadge__Text {
-  padding: 8px 16px;
-  border-radius: 9999px;
-  border: 2px solid white;
-  border-color: var(--filter-badge-border);
-}
-
-.FilterBadge input[type="checkbox"]:checked + .FilterBadge__Text {
-  background: var(--filter-badge-active);
-  border-color: white;
-  color: white;
 }
