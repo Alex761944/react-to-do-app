@@ -85,3 +85,27 @@ del {
   display: flex;
   gap: var(--size-m);
 }
+
+.FilterBadge {
+  cursor: pointer;
+  position: relative;
+}
+
+/* checkbox verstecken */
+.FilterBadge input[type="checkbox"] {
+  display: none;
+}
+
+/* pill */
+.FilterBadge__Text {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 2px solid white;
+}
+
+/* active pill */
+.FilterBadge input[type="checkbox"]:checked + .FilterBadge__Text {
+  background: var(--filter-badge-active);
+  border-color: white;
+  color: white;
+}

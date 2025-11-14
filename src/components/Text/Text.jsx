@@ -1,9 +1,9 @@
 import "./Text.css";
 
-export function Text({ as, variant, children }) {
-  const TextComponent = as;
+export function Text({ as: Tag = "p", variant, className = "", children }) {
+  const classes = ["Text", variant ? `Text--${variant}` : "", className]
+    .filter(Boolean)
+    .join(" ");
 
-  const classes = ["Text", `Text--${variant}`].join(" ");
-
-  return <TextComponent className={classes}>{children}</TextComponent>;
+  return <Tag className={classes}>{children}</Tag>;
 }

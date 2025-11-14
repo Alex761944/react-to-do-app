@@ -14,14 +14,17 @@ export const priorityOptions = [
   {
     label: "High",
     value: "high",
+    color: "var(--danger)",
   },
   {
     label: "Medium",
     value: "medium",
+    color: "var(--warning)",
   },
   {
     label: "Low",
     value: "low",
+    color: "var(--success)",
   },
 ];
 
@@ -138,7 +141,13 @@ function App() {
 
         <div className="Navigation__Prioritys">
           {priorityOptions.map((priorityOption, index) => (
-            <label key={index}>
+            <label
+              key={index}
+              className="FilterBadge"
+              style={{
+                "--filter-badge-active": priorityOption.color,
+              }}
+            >
               <input
                 type="checkbox"
                 value={priorityOption.value}
@@ -156,7 +165,9 @@ function App() {
                   });
                 }}
               />
-              <Text as="p">{priorityOption.label}</Text>
+              <Text as="span" className={`FilterBadge__Text`}>
+                {priorityOption.label}
+              </Text>
             </label>
           ))}
         </div>
