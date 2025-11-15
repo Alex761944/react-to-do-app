@@ -25,6 +25,11 @@
   letter-spacing: -0.01em;
 }
 
+.Text--BodySmall {
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
 .Text--Muted {
   color: var(--text-color-muted);
 }

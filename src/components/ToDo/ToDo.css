@@ -34,3 +34,15 @@
   height: 16px;
   transform: translate(-50%, -50%);
 }
+
+.ToDo__CreatedAt {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: none;
+  transform: translateX(-50%);
+}
+
+.ToDo:hover .ToDo__CreatedAt {
+  display: block;
+}

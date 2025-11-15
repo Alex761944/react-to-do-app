@@ -187,9 +187,11 @@ function App() {
             .map((toDo) => (
               <li key={toDo.createdAt}>
                 <ToDo
-                  isDone={toDo.isDone}
                   text={toDo.text}
                   priority={toDo.priority}
+                  createdAt={toDo.createdAt}
+                  isDone={toDo.isDone}
+                  isInEditMode={toDo.isInEditMode}
                   onToggle={() => toggleToDo(toDo.createdAt)}
                   handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
                   handleSave={(newText, priority) =>
@@ -198,7 +200,6 @@ function App() {
                   handleEditClick={() => {
                     editToDo(toDo.createdAt);
                   }}
-                  isInEditMode={toDo.isInEditMode}
                 />
               </li>
             ))}

@@ -1,13 +1,28 @@
 import "./ToDo.css";
 import { Button } from "../Button/Button";
 import { useState, useEffect, useRef } from "react";
-import { Text } from "..//Text/Text";
+import { Text } from "../Text/Text";
 import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
 import { priorityOptions } from "../../App";
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const options = {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
+
+  return date.toLocaleDateString("de-DE", options);
+}
 
 export function ToDo({
   text,
   priority,
+  createdAt,
   isDone,
   isInEditMode,
   onToggle,
@@ -99,6 +114,12 @@ export function ToDo({
           variant="icon"
           onClick={handleTrashcanClick}
         />
+      </div>
+
+      <div className="ToDo__CreatedAt">
+        <Text variant="BodySmall" color="Muted">
+          {formatDate(createdAt)}
+        </Text>
       </div>
     </div>
   );
