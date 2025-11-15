@@ -59,7 +59,7 @@ function App() {
 
   function addToDo() {
     setToDos((prev) => [
-      ...prev,
+      ...prev.map((toDo) => ({ ...toDo, isInEditMode: false })),
       {
         isDone: false,
         text: `New To Do`,
@@ -94,7 +94,9 @@ function App() {
   function editToDo(timestamp) {
     setToDos((prevToDos) =>
       prevToDos.map((toDo) =>
-        toDo.createdAt === timestamp ? { ...toDo, isInEditMode: true } : toDo
+        toDo.createdAt === timestamp
+          ? { ...toDo, isInEditMode: true }
+          : { ...toDo, isInEditMode: false }
       )
     );
   }
