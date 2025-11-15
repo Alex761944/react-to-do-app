@@ -29,6 +29,7 @@ export function ToDo({
   handleSave,
   handleTrashcanClick,
   handleEditClick,
+  handlePriorityChange,
 }) {
   const [inputValue, setInputValue] = useState(text);
   const [currentPriority, setCurrentPriority] = useState(priority);
@@ -57,24 +58,6 @@ export function ToDo({
 
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
-      {isInEditMode ? (
-        <select
-          value={currentPriority}
-          onChange={(event) => setCurrentPriority(event.target.value)}
-        >
-          {priorityOptions.map((priorityOption, index) => (
-            <option key={index} value={priorityOption.value}>
-              {priorityOption.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <div
-          className="ToDo__PriorityIndicator"
-          style={{ "--indicator-color": indicatorColor }}
-        ></div>
-      )}
-
       <label className="ToDo__Content">
         <input type="checkbox" checked={isDone} onChange={onToggle} />
         {isInEditMode ? (
@@ -93,6 +76,27 @@ export function ToDo({
           <Text as="p">{text}</Text>
         )}
       </label>
+
+      {isInEditMode && (
+        <select
+          value={currentPriority}
+          onChange={(event) => {
+            setCurrentPriority(event.target.value);
+            handlePriorityChange(inputValue, event.target.value);
+          }}
+        >
+          {priorityOptions.map((priorityOption, index) => (
+            <option key={index} value={priorityOption.value}>
+              {priorityOption.label}
+            </option>
+          ))}
+        </select>
+      )}
+
+      <div
+        className="ToDo__PriorityIndicator"
+        style={{ "--indicator-color": indicatorColor }}
+      ></div>
 
       <div className="ToDo__Actions">
         {isInEditMode ? (

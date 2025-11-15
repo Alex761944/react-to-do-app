@@ -81,11 +81,16 @@ function App() {
     );
   }
 
-  function saveToDo(timestamp, newText, priority) {
+  function saveToDo(timestamp, newText, priority, endEditMode = false) {
     setToDos((prevToDos) =>
       prevToDos.map((toDo) =>
         toDo.createdAt === timestamp
-          ? { ...toDo, text: newText, isInEditMode: false, priority: priority }
+          ? {
+              ...toDo,
+              text: newText,
+              isInEditMode: !endEditMode,
+              priority: priority,
+            }
           : toDo
       )
     );
@@ -205,11 +210,14 @@ function App() {
                   onToggle={() => toggleToDo(toDo.createdAt)}
                   handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
                   handleSave={(newText, priority) =>
-                    saveToDo(toDo.createdAt, newText, priority)
+                    saveToDo(toDo.createdAt, newText, priority, true)
                   }
                   handleEditClick={() => {
                     editToDo(toDo.createdAt);
                   }}
+                  handlePriorityChange={(newText, priority) =>
+                    saveToDo(toDo.createdAt, newText, priority)
+                  }
                 />
               </li>
             ))}
