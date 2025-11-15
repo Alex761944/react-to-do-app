@@ -37,21 +37,21 @@ function App() {
     JSON.parse(localStorage.getItem("to-dos")) || []
   );
 
-  useEffect(() => {
-    localStorage.setItem("to-dos", JSON.stringify(toDos));
-  }, [toDos]);
-
   const [selectedSortOption, setSelectedSortOption] = useState(
     localStorage.getItem("selected-sort-option") || "date-ascending"
+  );
+
+  const [selectedFilters, setSelectedFilters] = useState(
+    JSON.parse(localStorage.getItem("selected-filters")) || []
   );
 
   useEffect(() => {
     localStorage.setItem("selected-sort-option", selectedSortOption);
   }, [selectedSortOption]);
 
-  const [selectedFilters, setSelectedFilters] = useState(
-    JSON.parse(localStorage.getItem("selected-filters")) || []
-  );
+  useEffect(() => {
+    localStorage.setItem("to-dos", JSON.stringify(toDos));
+  }, [toDos]);
 
   useEffect(() => {
     localStorage.setItem("selected-filters", JSON.stringify(selectedFilters));
@@ -112,10 +112,18 @@ function App() {
   }
 
   function sortFunction(toDoA, toDoB) {
+    const dateA =
+      typeof toDoA.createdAt === "object"
+        ? toDoA.createdAt
+        : new Date(toDoA.createdAt);
+    const dateB =
+      typeof toDoB.createdAt === "object"
+        ? toDoB.createdAt
+        : new Date(toDoB.createdAt);
     if (selectedSortOption === "date-ascending") {
-      return toDoA.createdAt > toDoB.createdAt ? 1 : -1;
+      return dateA > dateB ? 1 : -1;
     } else {
-      return toDoA.createdAt < toDoB.createdAt ? 1 : -1;
+      return dateA < dateB ? 1 : -1;
     }
   }
 
