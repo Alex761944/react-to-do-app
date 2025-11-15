@@ -139,71 +139,73 @@ function App() {
         Organize your tasks and stay productive.
       </Text>
 
-      <ToDoListHeader>
-        <select
-          value={selectedSortOption}
-          onChange={(event) => {
-            setSelectedSortOption(event.target.value);
-          }}
-        >
-          {sortOptions.map((sortOption, index) => (
-            <option key={index} value={sortOption.value}>
-              {sortOption.label}
-            </option>
-          ))}
-        </select>
+      <div className="MainContent">
+        <ToDoListHeader>
+          <select
+            value={selectedSortOption}
+            onChange={(event) => {
+              setSelectedSortOption(event.target.value);
+            }}
+          >
+            {sortOptions.map((sortOption, index) => (
+              <option key={index} value={sortOption.value}>
+                {sortOption.label}
+              </option>
+            ))}
+          </select>
 
-        <FilterList>
-          {priorityOptions.map((priorityOption, index) => (
-            <li key={index}>
-              <Filter
-                value={priorityOption.value}
-                active={selectedFilters.includes(priorityOption.value)}
-                onChange={(event) => {
-                  const priority = event.target.value;
-                  handleFilterChange(priority);
-                }}
-              >
-                <Badge
-                  text={priorityOption.label}
-                  highlightColor={priorityOption.color}
-                  hasActiveState={true}
+          <FilterList>
+            {priorityOptions.map((priorityOption, index) => (
+              <li key={index}>
+                <Filter
+                  value={priorityOption.value}
+                  active={selectedFilters.includes(priorityOption.value)}
+                  onChange={(event) => {
+                    const priority = event.target.value;
+                    handleFilterChange(priority);
+                  }}
+                >
+                  <Badge
+                    text={priorityOption.label}
+                    highlightColor={priorityOption.color}
+                    hasActiveState={true}
+                  />
+                </Filter>
+              </li>
+            ))}
+          </FilterList>
+        </ToDoListHeader>
+
+        <ToDoList>
+          {toDos
+            .filter(
+              (todo) =>
+                selectedFilters.length === 0 ||
+                selectedFilters.includes(todo.priority)
+            )
+            .sort(sortFunction)
+            .map((toDo) => (
+              <li key={toDo.createdAt}>
+                <ToDo
+                  isDone={toDo.isDone}
+                  text={toDo.text}
+                  priority={toDo.priority}
+                  onToggle={() => toggleToDo(toDo.createdAt)}
+                  handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
+                  handleSave={(newText, priority) =>
+                    saveToDo(toDo.createdAt, newText, priority)
+                  }
+                  handleEditClick={() => {
+                    editToDo(toDo.createdAt);
+                  }}
+                  isInEditMode={toDo.isInEditMode}
                 />
-              </Filter>
-            </li>
-          ))}
-        </FilterList>
-      </ToDoListHeader>
+              </li>
+            ))}
+        </ToDoList>
 
-      <ToDoList>
-        {toDos
-          .filter(
-            (todo) =>
-              selectedFilters.length === 0 ||
-              selectedFilters.includes(todo.priority)
-          )
-          .sort(sortFunction)
-          .map((toDo) => (
-            <li key={toDo.createdAt}>
-              <ToDo
-                isDone={toDo.isDone}
-                text={toDo.text}
-                priority={toDo.priority}
-                onToggle={() => toggleToDo(toDo.createdAt)}
-                handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
-                handleSave={(newText, priority) =>
-                  saveToDo(toDo.createdAt, newText, priority)
-                }
-                handleEditClick={() => {
-                  editToDo(toDo.createdAt);
-                }}
-                isInEditMode={toDo.isInEditMode}
-              />
-            </li>
-          ))}
-      </ToDoList>
-
-      <Button onClick={addToDo}>Add To Do</Button>
+        <Button onClick={addToDo}>Add To Do</Button>
+      </div>
     </>
   );
 }

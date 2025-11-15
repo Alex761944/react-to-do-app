@@ -82,3 +82,11 @@ del {
     background-color: #f9f9f9;
   }
 }
+
+.MainContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  gap: var(--size-l);
+}
