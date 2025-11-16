@@ -1,6 +1,6 @@
 .ToDoList {
   display: flex;
   flex-direction: column;
-  gap: var(--size-l);
+  gap: var(--size-xl);
   width: 100%;
 }
