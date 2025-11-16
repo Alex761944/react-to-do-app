@@ -146,11 +146,11 @@ function App() {
 
   return (
     <>
-      <Text as="h1" variant="HeadingLarge">
+      <Text as="h1" variant="heading-large">
         To-Do List
       </Text>
 
-      <Text as="h2" variant="HeadingSmall">
+      <Text as="h2" variant="heading-small">
         Organize your tasks and stay productive.
       </Text>
 

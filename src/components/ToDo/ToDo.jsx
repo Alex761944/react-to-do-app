@@ -121,7 +121,7 @@ export function ToDo({
       </div>
 
       <div className="ToDo__CreatedAt">
-        <Text variant="BodySmall" color="Muted">
+        <Text variant="body-small" color="muted">
           {formatDate(createdAt)}
         </Text>
       </div>

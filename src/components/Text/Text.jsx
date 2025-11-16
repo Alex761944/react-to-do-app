@@ -9,7 +9,7 @@ export function Text({ as: Tag = "p", variant, children, color }) {
   }
 
   if (color) {
-    classes += ` Text--${color}`;
+    classes += ` Text--${toPascalCase(color)}`;
   }
 
   return <Tag className={classes}>{children}</Tag>;
