@@ -12,6 +12,7 @@ import { Filter } from "./components/Filter/Filter";
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
   { label: "Date Descending", value: "date-descending" },
+  { label: "Custom", value: "custom" },
 ];
 
 export const priorityOptions = [
