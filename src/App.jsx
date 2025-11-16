@@ -39,6 +39,8 @@ function App() {
     JSON.parse(localStorage.getItem("to-dos")) || []
   );
 
+  const [exportData, setExportData] = useState(null);
+
   const [selectedSortOption, setSelectedSortOption] = useState(
     localStorage.getItem("selected-sort-option") || "date-ascending"
   );
@@ -53,6 +55,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("to-dos", JSON.stringify(toDos));
+    setExportData(encodeURIComponent(JSON.stringify(toDos)));
   }, [toDos]);
 
   useEffect(() => {
@@ -225,6 +228,27 @@ function App() {
         <Button>Import To Do`s</Button>
 
         <Button>Export To Do`s</Button>
+        <a
+          href={`data:text/plain;charset=utf-8,${exportData}`}
+          download={"todo-export.txt"}
+        >
+          export
+        </a>
+
+        <input
+          type="file"
+          name=""
+          id=""
+          onChange={(event) => {
+            console.log(event);
+            fetch("todo-export.txt")
+              .then((response) => {
+                console.log(response);
+                return response.text();
+              })
+              .then((text) => console.log(text));
+          }}
+        />
       </div>
     </>
   );
