@@ -226,9 +226,9 @@ function App() {
 
         <Button onClick={addToDo}>Add To Do</Button>
 
-        <Button>Export To Do`s</Button>
-
         <Button>Import To Do`s</Button>
+
+        <Button>Export To Do`s</Button>
       </div>
     </>
   );
