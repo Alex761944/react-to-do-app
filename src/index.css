@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Put css variables here */
+  --text-font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   --text-color-muted: #888;
 
   --success: rgb(115, 255, 115);

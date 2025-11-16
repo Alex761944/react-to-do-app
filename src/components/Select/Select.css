@@ -1,0 +1,7 @@
+.Select {
+  padding: var(--size-xs) var(--size-m);
+  border-radius: var(--border-radius);
+  font-family: var(--text-font-family);
+  font-size: 1rem;
+  line-height: 1.5;
+}

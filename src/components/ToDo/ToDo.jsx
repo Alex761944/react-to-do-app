@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Text } from "../Text/Text";
 import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
 import { priorityOptions } from "../../App";
+import { Select } from "../Select/Select";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -78,19 +79,14 @@ export function ToDo({
       </label>
 
       {isInEditMode && (
-        <select
+        <Select
           value={currentPriority}
+          options={priorityOptions}
           onChange={(event) => {
             setCurrentPriority(event.target.value);
             handlePriorityChange(inputValue, event.target.value);
           }}
-        >
-          {priorityOptions.map((priorityOption, index) => (
-            <option key={index} value={priorityOption.value}>
-              {priorityOption.label}
-            </option>
-          ))}
-        </select>
+        />
       )}
 
       <div

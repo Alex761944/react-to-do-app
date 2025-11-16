@@ -8,6 +8,7 @@ import { ToDoListHeader } from "./components/ToDoListHeader/ToDoListHeader";
 import { FilterList } from "./components/FilterList/FilterList";
 import { Badge } from "./components/Badge/Badge";
 import { Filter } from "./components/Filter/Filter";
+import { Select } from "./components/Select/Select";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -157,18 +158,13 @@ function App() {
 
       <div className="MainContent">
         <ToDoListHeader>
-          <select
+          <Select
             value={selectedSortOption}
+            options={sortOptions}
             onChange={(event) => {
               setSelectedSortOption(event.target.value);
             }}
-          >
-            {sortOptions.map((sortOption, index) => (
-              <option key={index} value={sortOption.value}>
-                {sortOption.label}
-              </option>
-            ))}
-          </select>
+          />
 
           <FilterList>
             {priorityOptions.map((priorityOption, index) => (
