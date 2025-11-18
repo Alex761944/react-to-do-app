@@ -5,6 +5,7 @@ import { Text } from "../Text/Text";
 import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
 import { priorityOptions } from "../../App";
 import { Select } from "../Select/Select";
+import { Checkbox } from "../Checkbox/Checkbox";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -60,6 +61,7 @@ export function ToDo({
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
       <label className="ToDo__Content">
+        <Checkbox isChecked={isDone} onChange={onToggle}></Checkbox>
         <input type="checkbox" checked={isDone} onChange={onToggle} />
         {isInEditMode ? (
           <form onSubmit={() => handleSave(inputValue, currentPriority)}>
