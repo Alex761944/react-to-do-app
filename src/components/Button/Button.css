@@ -13,6 +13,7 @@
 .Button--Icon {
   padding: 0;
   background: none;
+  border: none;
 }
 
 button:hover {

@@ -9,6 +9,7 @@ import { FilterList } from "./components/FilterList/FilterList";
 import { Badge } from "./components/Badge/Badge";
 import { Filter } from "./components/Filter/Filter";
 import { Select } from "./components/Select/Select";
+import { Settings, X } from "lucide-react";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -225,9 +226,37 @@ function App() {
 
         <Button onClick={addToDo}>Add To Do</Button>
 
-        <Button>Import To Do`s</Button>
+        <div className="Settings">
+          <Button
+            icon={<Settings />}
+            variant="icon"
+            onClick={() => {
+              const dialog = document.querySelector('[data-modal="settings"]');
+              dialog.showModal();
+            }}
+          />
+        </div>
 
-        <Button>Export To Do`s</Button>
+        <dialog className="Modal" data-modal="settings">
+          <div className="Modal__Content">
+            <div className="Modal__Close">
+              <Button
+                icon={<X />}
+                variant="icon"
+                onClick={() => {
+                  const dialog = document.querySelector(
+                    '[data-modal="settings"]'
+                  );
+                  dialog.close();
+                }}
+              ></Button>
+            </div>
+            <Button>Import To Do`s</Button>
+
+            <Button>Export To Do`s</Button>
+          </div>
+        </dialog>
+
         <a
           href={`data:text/plain;charset=utf-8,${exportData}`}
           download={"todo-export.txt"}
