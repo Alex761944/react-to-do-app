@@ -5,12 +5,13 @@
   justify-content: space-between;
   padding: var(--size-m);
   gap: var(--size-l);
-  border: var(--border-size) var(--border-style) var(--border-color);
+  border: var(--border-size) var(--border-style-secondary) var(--border-color);
 }
 
 .ToDo__Content {
   display: flex;
-  gap: var(--size-s);
+  align-items: center;
+  gap: var(--size-m);
   cursor: pointer;
 }
 

@@ -1,0 +1,12 @@
+.Checkbox {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--checkbox-size);
+  aspect-ratio: 1;
+  background-color: var(--checkbox-background-color);
+  border-radius: var(--border-radius-s);
+  border: var(--border-size) var(--border-style) var(--border-color);
+  cursor: pointer;
+}

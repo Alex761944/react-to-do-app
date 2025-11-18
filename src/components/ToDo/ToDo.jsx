@@ -61,7 +61,7 @@ export function ToDo({
   return (
     <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
       <label className="ToDo__Content">
-        <Checkbox isChecked={isDone} onChange={onToggle}></Checkbox>
+        <Checkbox checked={isDone} onChange={onToggle} />
         {isInEditMode ? (
           <form onSubmit={() => handleSave(inputValue, currentPriority)}>
             <input
