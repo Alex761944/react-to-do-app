@@ -10,6 +10,7 @@ import { Badge } from "./components/Badge/Badge";
 import { Filter } from "./components/Filter/Filter";
 import { Select } from "./components/Select/Select";
 import { Settings, X } from "lucide-react";
+import { Modal } from "./components/Modal/Modal";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -238,22 +239,13 @@ function App() {
           />
         </div>
 
-        <dialog className="Modal" ref={settingsDialogRef}>
-          <div className="Modal__Content">
-            <div className="Modal__Close">
-              <Button
-                icon={<X />}
-                variant="icon"
-                onClick={() => {
-                  settingsDialogRef.current.close();
-                }}
-              />
-            </div>
-            <Button>Import To Do`s</Button>
-
-            <Button>Export To Do`s</Button>
-          </div>
-        </dialog>
+        <Modal
+          modalRef={settingsDialogRef}
+          onClose={() => settingsDialogRef.current.close()}
+        >
+          <Button>Import To Do`s</Button>
+          <Button>Export To Do`s</Button>
+        </Modal>
 
         <a
           href={`data:text/plain;charset=utf-8,${exportData}`}

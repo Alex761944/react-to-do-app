@@ -1,18 +1,13 @@
 import "./Modal.css";
+import { Button } from "../Button/Button";
+import { X } from "lucide-react";
 
-export function Modal({ children }) {
+export function Modal({ modalRef, onClose, children }) {
   return (
-    <dialog className="Modal" data-model="settings">
+    <dialog className="Modal" ref={modalRef}>
       <div className="Modal__Content">
         <div className="Modal__Close">
-          <Button
-            icon={<X />}
-            variant="icon"
-            onClick={() => {
-              const dialog = document.querySelector('[data-modal="settings"]');
-              dialog.close();
-            }}
-          />
+          <Button icon={<X />} variant="icon" onClick={onClose} />
         </div>
         {children}
       </div>
