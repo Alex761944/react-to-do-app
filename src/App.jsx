@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
@@ -36,6 +36,8 @@ export const priorityOptions = [
 ];
 
 function App() {
+  const settingsDialogRef = useRef();
+
   const [toDos, setToDos] = useState(
     JSON.parse(localStorage.getItem("to-dos")) || []
   );
@@ -231,23 +233,19 @@ function App() {
             icon={<Settings />}
             variant="icon"
             onClick={() => {
-              const dialog = document.querySelector('[data-modal="settings"]');
-              dialog.showModal();
+              settingsDialogRef.current.showModal();
             }}
           />
         </div>
 
-        <dialog className="Modal" data-modal="settings">
+        <dialog className="Modal" ref={settingsDialogRef}>
           <div className="Modal__Content">
             <div className="Modal__Close">
               <Button
                 icon={<X />}
                 variant="icon"
                 onClick={() => {
-                  const dialog = document.querySelector(
-                    '[data-modal="settings"]'
-                  );
-                  dialog.close();
+                  settingsDialogRef.current.close();
                 }}
               />
             </div>
