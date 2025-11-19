@@ -1,0 +1,19 @@
+.Modal {
+  width: 90%;
+  max-width: 400px;
+  border-radius: var(--border-radius);
+  border: var(--border-size) solid white;
+}
+
+.Modal__Close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.Modal__Content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--size-m);
+}
