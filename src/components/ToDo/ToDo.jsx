@@ -6,6 +6,7 @@ import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
 import { priorityOptions } from "../../App";
 import { Select } from "../Select/Select";
 import { Checkbox } from "../Checkbox/Checkbox";
+import { Icon } from "../Icon/Icon";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -98,20 +99,20 @@ export function ToDo({
       <div className="ToDo__Actions">
         {isInEditMode ? (
           <Button
-            icon={<CheckSquare color="var(--success)" />}
+            icon={<Icon lucideIcon={<CheckSquare color="var(--success)" />} />}
             variant="icon"
             onClick={() => handleSave(inputValue, currentPriority)}
           />
         ) : (
           <Button
-            icon={<SquarePen color="var(--warning)" />}
+            icon={<Icon lucideIcon={<SquarePen color="var(--warning)" />} />}
             variant="icon"
             onClick={handleEditClick}
           />
         )}
 
         <Button
-          icon={<Trash2 color="var(--danger)" />}
+          icon={<Icon lucideIcon={<Trash2 color="var(--danger)" />} />}
           variant="icon"
           onClick={handleTrashcanClick}
         />

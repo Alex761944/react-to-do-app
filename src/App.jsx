@@ -11,6 +11,7 @@ import { Filter } from "./components/Filter/Filter";
 import { Select } from "./components/Select/Select";
 import { Settings, X } from "lucide-react";
 import { Modal } from "./components/Modal/Modal";
+import { Icon } from "./components/Icon/Icon";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -228,7 +229,7 @@ function App() {
         <Button onClick={addToDo}>Add To Do</Button>
 
         <div className="Settings">
-          <Modal triggerIcon={<Settings />}>
+          <Modal triggerIcon={<Icon lucideIcon={<Settings />} />}>
             <Button>Import To Do`s</Button>
             <Button>Export To Do`s</Button>
           </Modal>

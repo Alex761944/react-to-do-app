@@ -19,7 +19,6 @@
 }
 
 .Button--Icon {
-  display: flex;
   padding: var(--size-m);
   background: none;
   border: none;

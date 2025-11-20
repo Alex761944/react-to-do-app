@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import { Icon } from "../Icon/Icon";
 import "./Checkbox.css";
 
 export function Checkbox({ checked, onChange }) {
@@ -11,7 +12,7 @@ export function Checkbox({ checked, onChange }) {
         onChange={onChange}
       />
 
-      {checked && <Check size={20} strokeWidth={4} />}
+      {checked && <Icon lucideIcon={<Check size={20} strokeWidth={4} />} />}
     </label>
   );
 }
