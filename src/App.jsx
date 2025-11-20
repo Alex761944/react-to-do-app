@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
@@ -37,8 +37,6 @@ export const priorityOptions = [
 ];
 
 function App() {
-  const settingsDialogRef = useRef();
-
   const [toDos, setToDos] = useState(
     JSON.parse(localStorage.getItem("to-dos")) || []
   );
@@ -230,22 +228,11 @@ function App() {
         <Button onClick={addToDo}>Add To Do</Button>
 
         <div className="Settings">
-          <Button
-            icon={<Settings />}
-            variant="icon"
-            onClick={() => {
-              settingsDialogRef.current.showModal();
-            }}
-          />
+          <Modal triggerIcon={<Settings />}>
+            <Button>Import To Do`s</Button>
+            <Button>Export To Do`s</Button>
+          </Modal>
         </div>
-
-        <Modal
-          modalRef={settingsDialogRef}
-          onClose={() => settingsDialogRef.current.close()}
-        >
-          <Button>Import To Do`s</Button>
-          <Button>Export To Do`s</Button>
-        </Modal>
 
         <a
           href={`data:text/plain;charset=utf-8,${exportData}`}
