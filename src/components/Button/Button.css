@@ -1,6 +1,7 @@
 .Button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--size-m);
   border-radius: var(--border-radius);
   border: var(--border-size) solid transparent;
@@ -11,14 +12,14 @@
   background-color: var(--button-background-color);
   cursor: pointer;
   transition: border-color 0.25s;
-}
 
-.Button:focus-visible {
-  outline: none;
-}
+  &:focus-visible {
+    outline: none;
+  }
 
-.Button:hover {
-  border-color: var(--highlight-color);
+  &:hover {
+    border-color: var(--highlight-color);
+  }
 }
 
 .Button--Icon {

@@ -9,7 +9,7 @@ import { FilterList } from "./components/FilterList/FilterList";
 import { Badge } from "./components/Badge/Badge";
 import { Filter } from "./components/Filter/Filter";
 import { Select } from "./components/Select/Select";
-import { Settings, X } from "lucide-react";
+import { Settings } from "lucide-react";
 import { Modal } from "./components/Modal/Modal";
 import { Icon } from "./components/Icon/Icon";
 
@@ -257,6 +257,8 @@ function App() {
           }}
         />
       </div>
+
+      {/* Build dnd here */}
     </>
   );
 }
