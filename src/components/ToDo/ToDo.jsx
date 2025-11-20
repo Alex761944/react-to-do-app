@@ -100,20 +100,17 @@ export function ToDo({
         {isInEditMode ? (
           <Button
             icon={<Icon lucideIcon={<CheckSquare color="var(--success)" />} />}
-            variant="icon"
             onClick={() => handleSave(inputValue, currentPriority)}
           />
         ) : (
           <Button
             icon={<Icon lucideIcon={<SquarePen color="var(--warning)" />} />}
-            variant="icon"
             onClick={handleEditClick}
           />
         )}
 
         <Button
           icon={<Icon lucideIcon={<Trash2 color="var(--danger)" />} />}
-          variant="icon"
           onClick={handleTrashcanClick}
         />
       </div>
