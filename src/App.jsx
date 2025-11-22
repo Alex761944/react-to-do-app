@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "./App.css";
+import { useEffect, useState } from "react";
 import { ToDo } from "./components/ToDo/ToDo";
 import { ToDoList } from "./components/ToDoList/ToDoList";
 import { Text } from "./components/Text/Text";
@@ -12,6 +12,11 @@ import { Select } from "./components/Select/Select";
 import { Settings } from "lucide-react";
 import { Modal } from "./components/Modal/Modal";
 import { Icon } from "./components/Icon/Icon";
+
+import { DndContext } from "@dnd-kit/core";
+
+import { Draggable } from "./components/Draggable/Draggable";
+import { Droppable } from "./components/Droppable/Droppable";
 
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
@@ -51,6 +56,8 @@ function App() {
   const [selectedFilters, setSelectedFilters] = useState(
     JSON.parse(localStorage.getItem("selected-filters")) || []
   );
+
+  const [droppedOver, setDroppedOver] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("selected-sort-option", selectedSortOption);
@@ -152,6 +159,15 @@ function App() {
     });
   }
 
+  function handleDragEnd(event) {
+    console.log(event);
+    if (!event.over) {
+      setDroppedOver(null);
+    } else {
+      setDroppedOver(event.over.id);
+    }
+  }
+
   return (
     <>
       <Text as="h1" variant="heading-large">
@@ -235,30 +251,64 @@ function App() {
           </Modal>
         </div>
 
-        <a
-          href={`data:text/plain;charset=utf-8,${exportData}`}
-          download={"todo-export.txt"}
-        >
-          export
-        </a>
+        <div className="u-Hidden">
+          <a
+            href={`data:text/plain;charset=utf-8,${exportData}`}
+            download={"todo-export.txt"}
+          >
+            export
+          </a>
 
-        <input
-          type="file"
-          name=""
-          id=""
-          onChange={(event) => {
-            console.log(event);
-            fetch("todo-export.txt")
-              .then((response) => {
-                console.log(response);
-                return response.text();
-              })
-              .then((text) => console.log(text));
-          }}
-        />
+          <input
+            type="file"
+            name=""
+            id=""
+            onChange={(event) => {
+              console.log(event);
+              fetch("todo-export.txt")
+                .then((response) => {
+                  console.log(response);
+                  return response.text();
+                })
+                .then((text) => console.log(text));
+            }}
+          />
+        </div>
       </div>
 
       {/* Build dnd here */}
+
+      <div className="DND-Component">
+        <DndContext onDragEnd={handleDragEnd}>
+          {!droppedOver && (
+            <Draggable>
+              <Text>Draggable</Text>
+            </Draggable>
+          )}
+
+          <Droppable id={"area-1"}>
+            <div className="Area">
+              Area 1
+              {droppedOver === "area-1" && (
+                <Draggable>
+                  <Text>Draggable</Text>
+                </Draggable>
+              )}
+            </div>
+          </Droppable>
+
+          <Droppable id={"area-2"}>
+            <div className="Area">
+              Area 2
+              {droppedOver === "area-2" && (
+                <Draggable>
+                  <Text>Draggable</Text>
+                </Draggable>
+              )}
+            </div>
+          </Droppable>
+        </DndContext>
+      </div>
     </>
   );
 }

@@ -118,3 +118,10 @@ del {
   max-width: 600px;
   gap: var(--size-l);
 }
+
+.Area {
+  width: 300px;
+  height: 100px;
+  background-color: red;
+  border: 1px solid white;
+}
