@@ -81,6 +81,7 @@ function App() {
         isInEditMode: true,
         createdAt: new Date(),
         priority: "medium",
+        column: "backlog",
       },
     ]);
   }
@@ -160,12 +161,23 @@ function App() {
   }
 
   function handleDragEnd(event) {
-    console.log(event);
     if (!event.over) {
       setDroppedOver(null);
     } else {
       setDroppedOver(event.over.id);
     }
+  }
+
+  function handleToDoDragEnd(event) {
+    if (!event.over) return;
+
+    setToDos((prevToDos) => {
+      prevToDos.map((toDo) =>
+        toDo.createdAt === event.active.id
+          ? { ...toDo, column: event.over.id }
+          : toDo
+      );
+    });
   }
 
   return (
@@ -211,35 +223,51 @@ function App() {
         </ToDoListHeader>
 
         <ToDoList>
-          {toDos
-            .filter(
-              (todo) =>
-                selectedFilters.length === 0 ||
-                selectedFilters.includes(todo.priority)
-            )
-            .sort(sortFunction)
-            .map((toDo) => (
-              <li key={toDo.createdAt}>
-                <ToDo
-                  text={toDo.text}
-                  priority={toDo.priority}
-                  createdAt={toDo.createdAt}
-                  isDone={toDo.isDone}
-                  isInEditMode={toDo.isInEditMode}
-                  onToggle={() => toggleToDo(toDo.createdAt)}
-                  handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
-                  handleSave={(newText, priority) =>
-                    saveToDo(toDo.createdAt, newText, priority, true)
-                  }
-                  handleEditClick={() => {
-                    editToDo(toDo.createdAt);
-                  }}
-                  handlePriorityChange={(newText, priority) =>
-                    saveToDo(toDo.createdAt, newText, priority)
-                  }
-                />
-              </li>
-            ))}
+          <DndContext>
+            <Droppable id="backlog">
+              <div className="Column">
+                {toDos
+                  .filter(
+                    (todo) =>
+                      selectedFilters.length === 0 ||
+                      selectedFilters.includes(todo.priority)
+                  )
+                  .sort(sortFunction)
+                  .map((toDo) => (
+                    <Draggable key={toDo.createdAt} id={toDo.createdAt}>
+                      <li>
+                        <ToDo
+                          text={toDo.text}
+                          priority={toDo.priority}
+                          createdAt={toDo.createdAt}
+                          isDone={toDo.isDone}
+                          isInEditMode={toDo.isInEditMode}
+                          onToggle={() => toggleToDo(toDo.createdAt)}
+                          handleTrashcanClick={() => deleteToDo(toDo.createdAt)}
+                          handleSave={(newText, priority) =>
+                            saveToDo(toDo.createdAt, newText, priority, true)
+                          }
+                          handleEditClick={() => {
+                            editToDo(toDo.createdAt);
+                          }}
+                          handlePriorityChange={(newText, priority) =>
+                            saveToDo(toDo.createdAt, newText, priority)
+                          }
+                        />
+                      </li>
+                    </Draggable>
+                  ))}
+              </div>
+            </Droppable>
+
+            <Droppable id="in-progress">
+              <div className="Column"></div>
+            </Droppable>
+
+            <Droppable id="done">
+              <div className="Column"></div>
+            </Droppable>
+          </DndContext>
         </ToDoList>
 
         <Button onClick={addToDo}>Add To Do</Button>

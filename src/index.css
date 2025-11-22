@@ -125,3 +125,11 @@ del {
   background-color: red;
   border: 1px solid white;
 }
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-l);
+  min-height: 200px;
+  background-color: rgb(128, 128, 128, 0.2);
+}
