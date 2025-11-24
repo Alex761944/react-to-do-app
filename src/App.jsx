@@ -268,35 +268,33 @@ function App() {
                             />
                           </li>
                         ) : (
-                          <Draggable key={toDo.createdAt} id={toDo.createdAt}>
-                            <li>
-                              <ToDo
-                                text={toDo.text}
-                                priority={toDo.priority}
-                                createdAt={toDo.createdAt}
-                                isDone={toDo.isDone}
-                                isInEditMode={toDo.isInEditMode}
-                                onToggle={() => toggleToDo(toDo.createdAt)}
-                                handleTrashcanClick={() =>
-                                  deleteToDo(toDo.createdAt)
-                                }
-                                handleSave={(newText, priority) =>
-                                  saveToDo(
-                                    toDo.createdAt,
-                                    newText,
-                                    priority,
-                                    true
-                                  )
-                                }
-                                handleEditClick={() => {
-                                  editToDo(toDo.createdAt);
-                                }}
-                                handlePriorityChange={(newText, priority) =>
-                                  saveToDo(toDo.createdAt, newText, priority)
-                                }
-                              />
-                            </li>
-                          </Draggable>
+                          <li key={toDo.createdAt}>
+                            <ToDo
+                              text={toDo.text}
+                              priority={toDo.priority}
+                              createdAt={toDo.createdAt}
+                              isDone={toDo.isDone}
+                              isInEditMode={toDo.isInEditMode}
+                              onToggle={() => toggleToDo(toDo.createdAt)}
+                              handleTrashcanClick={() =>
+                                deleteToDo(toDo.createdAt)
+                              }
+                              handleSave={(newText, priority) =>
+                                saveToDo(
+                                  toDo.createdAt,
+                                  newText,
+                                  priority,
+                                  true
+                                )
+                              }
+                              handleEditClick={() => {
+                                editToDo(toDo.createdAt);
+                              }}
+                              handlePriorityChange={(newText, priority) =>
+                                saveToDo(toDo.createdAt, newText, priority)
+                              }
+                            />
+                          </li>
                         )}
                       </>
                     ))}

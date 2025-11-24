@@ -7,6 +7,7 @@ import { priorityOptions } from "../../App";
 import { Select } from "../Select/Select";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { Icon } from "../Icon/Icon";
+import { Draggable } from "../Draggable/Draggable";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -74,9 +75,15 @@ export function ToDo({
             />
           </form>
         ) : isDone ? (
-          <Text as="del">{text}</Text>
+          <div className="ToDo__Text">
+            <Draggable id={createdAt} className="ToDo__DraggableArea" />
+            <Text as="del">{text}</Text>
+          </div>
         ) : (
-          <Text as="p">{text}</Text>
+          <div className="ToDo__Text">
+            <Draggable id={createdAt} className="ToDo__DraggableArea" />
+            <Text as="p">{text}</Text>
+          </div>
         )}
       </label>
 
