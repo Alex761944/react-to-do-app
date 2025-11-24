@@ -226,8 +226,8 @@ function App() {
 
         <ToDoList>
           <DndContext onDragEnd={handleToDoDragEnd}>
-            {columns.map((column) => (
-              <Droppable id={column}>
+            {columns.map((column, index) => (
+              <Droppable key={index} id={column}>
                 <div className="Column">
                   {toDos
                     .filter((toDo) => toDo.column === column)
@@ -238,30 +238,67 @@ function App() {
                     )
                     .sort(sortFunction)
                     .map((toDo) => (
-                      <Draggable key={toDo.createdAt} id={toDo.createdAt}>
-                        <li>
-                          <ToDo
-                            text={toDo.text}
-                            priority={toDo.priority}
-                            createdAt={toDo.createdAt}
-                            isDone={toDo.isDone}
-                            isInEditMode={toDo.isInEditMode}
-                            onToggle={() => toggleToDo(toDo.createdAt)}
-                            handleTrashcanClick={() =>
-                              deleteToDo(toDo.createdAt)
-                            }
-                            handleSave={(newText, priority) =>
-                              saveToDo(toDo.createdAt, newText, priority, true)
-                            }
-                            handleEditClick={() => {
-                              editToDo(toDo.createdAt);
-                            }}
-                            handlePriorityChange={(newText, priority) =>
-                              saveToDo(toDo.createdAt, newText, priority)
-                            }
-                          />
-                        </li>
-                      </Draggable>
+                      <>
+                        {toDo.isInEditMode ? (
+                          <li>
+                            <ToDo
+                              text={toDo.text}
+                              priority={toDo.priority}
+                              createdAt={toDo.createdAt}
+                              isDone={toDo.isDone}
+                              isInEditMode={toDo.isInEditMode}
+                              onToggle={() => toggleToDo(toDo.createdAt)}
+                              handleTrashcanClick={() =>
+                                deleteToDo(toDo.createdAt)
+                              }
+                              handleSave={(newText, priority) =>
+                                saveToDo(
+                                  toDo.createdAt,
+                                  newText,
+                                  priority,
+                                  true
+                                )
+                              }
+                              handleEditClick={() => {
+                                editToDo(toDo.createdAt);
+                              }}
+                              handlePriorityChange={(newText, priority) =>
+                                saveToDo(toDo.createdAt, newText, priority)
+                              }
+                            />
+                          </li>
+                        ) : (
+                          <Draggable key={toDo.createdAt} id={toDo.createdAt}>
+                            <li>
+                              <ToDo
+                                text={toDo.text}
+                                priority={toDo.priority}
+                                createdAt={toDo.createdAt}
+                                isDone={toDo.isDone}
+                                isInEditMode={toDo.isInEditMode}
+                                onToggle={() => toggleToDo(toDo.createdAt)}
+                                handleTrashcanClick={() =>
+                                  deleteToDo(toDo.createdAt)
+                                }
+                                handleSave={(newText, priority) =>
+                                  saveToDo(
+                                    toDo.createdAt,
+                                    newText,
+                                    priority,
+                                    true
+                                  )
+                                }
+                                handleEditClick={() => {
+                                  editToDo(toDo.createdAt);
+                                }}
+                                handlePriorityChange={(newText, priority) =>
+                                  saveToDo(toDo.createdAt, newText, priority)
+                                }
+                              />
+                            </li>
+                          </Draggable>
+                        )}
+                      </>
                     ))}
                 </div>
               </Droppable>
