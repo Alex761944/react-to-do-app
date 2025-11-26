@@ -159,14 +159,6 @@ function App() {
     });
   }
 
-  function handleDragEnd(event) {
-    if (!event.over) {
-      setDroppedOver(null);
-    } else {
-      setDroppedOver(event.over.id);
-    }
-  }
-
   function handleToDoDragEnd(event) {
     if (!event.over) return;
 
@@ -177,6 +169,35 @@ function App() {
           : toDo;
       });
     });
+  }
+
+  function handleExportToDos() {
+    const dataStr = JSON.stringify(toDos, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "export.todos";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function handleImportToDos(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        setToDos(imported);
+      } catch (err) {
+        alert("Invalid file");
+      }
+    };
+
+    reader.readAsText(file);
   }
 
   return (
@@ -286,33 +307,22 @@ function App() {
 
         <div className="Settings">
           <Modal triggerIcon={<Icon lucideIcon={<Settings />} />}>
-            <Button>Import To Do`s</Button>
-            <Button>Export To Do`s</Button>
+            <input
+              id="import-todos-input"
+              className="u-Hidden"
+              type="file"
+              accept=".todos"
+              onChange={handleImportToDos}
+            />
+            <Button
+              onClick={() =>
+                document.querySelector("#import-todos-input").click()
+              }
+            >
+              Import To Do`s
+            </Button>
+            <Button onClick={handleExportToDos}>Export To Do`s</Button>
           </Modal>
-        </div>
-
-        <div className="u-Hidden">
-          <a
-            href={`data:text/plain;charset=utf-8,${exportData}`}
-            download={"todo-export.txt"}
-          >
-            export
-          </a>
-
-          <input
-            type="file"
-            name=""
-            id=""
-            onChange={(event) => {
-              console.log(event);
-              fetch("todo-export.txt")
-                .then((response) => {
-                  console.log(response);
-                  return response.text();
-                })
-                .then((text) => console.log(text));
-            }}
-          />
         </div>
       </div>
     </>
