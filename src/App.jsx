@@ -21,7 +21,6 @@ import { Droppable } from "./components/Droppable/Droppable";
 const sortOptions = [
   { label: "Date Ascending", value: "date-ascending" },
   { label: "Date Descending", value: "date-descending" },
-  { label: "Custom", value: "custom" },
 ];
 
 export const priorityOptions = [
@@ -58,8 +57,6 @@ function App() {
   const [selectedFilters, setSelectedFilters] = useState(
     JSON.parse(localStorage.getItem("selected-filters")) || []
   );
-
-  const [droppedOver, setDroppedOver] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("selected-sort-option", selectedSortOption);
