@@ -45,10 +45,8 @@ const columns = ["backlog", "in-progress", "done"];
 
 function App() {
   const [toDos, setToDos] = useState(
-    JSON.parse(localStorage.getItem("to-dos")) || []
+    validateToDosData(JSON.parse(localStorage.getItem("to-dos"))) || []
   );
-
-  const [exportData, setExportData] = useState(null);
 
   const [selectedSortOption, setSelectedSortOption] = useState(
     localStorage.getItem("selected-sort-option") || "date-ascending"
@@ -64,7 +62,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("to-dos", JSON.stringify(toDos));
-    setExportData(encodeURIComponent(JSON.stringify(toDos)));
   }, [toDos]);
 
   useEffect(() => {
@@ -191,13 +188,38 @@ function App() {
     reader.onload = (ev) => {
       try {
         const imported = JSON.parse(ev.target.result);
-        setToDos(imported);
+        setToDos(validateToDosData(imported));
       } catch (err) {
         alert("Invalid file");
       }
     };
 
     reader.readAsText(file);
+  }
+
+  function validateToDosData(toDos) {
+    return toDos.map((toDo) => {
+      return {
+        isDone: typeof toDo.isDone === "boolean" ? toDo.isDone : false,
+        text:
+          toDo.text && typeof toDo.text === "string"
+            ? toDo.text
+            : "Missing Text",
+        isInEditMode: false,
+        createdAt:
+          toDo.createdAt && typeof toDo.createdAt === "string"
+            ? toDo.createdAt
+            : JSON.stringify(new Date()),
+        priority:
+          toDo.priority && typeof toDo.priority === "string"
+            ? toDo.priority
+            : "medium",
+        column:
+          toDo.column && typeof toDo.column === "string"
+            ? toDo.column
+            : "backlog",
+      };
+    });
   }
 
   return (
