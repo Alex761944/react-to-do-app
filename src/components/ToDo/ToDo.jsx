@@ -2,12 +2,11 @@ import "./ToDo.css";
 import { Button } from "../Button/Button";
 import { useState, useEffect, useRef } from "react";
 import { Text } from "../Text/Text";
-import { SquarePen, CheckSquare, Trash2 } from "lucide-react";
+import { SquarePen, CheckSquare, Trash2, Grip } from "lucide-react";
 import { priorityOptions } from "../../App";
 import { Select } from "../Select/Select";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { Icon } from "../Icon/Icon";
-import { Draggable } from "../Draggable/Draggable";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -24,6 +23,10 @@ function formatDate(dateString) {
 }
 
 export function ToDo({
+  ref,
+  dragListeners,
+  dragAttributes,
+  style,
   text,
   priority,
   createdAt,
@@ -61,7 +64,15 @@ export function ToDo({
   }
 
   return (
-    <div className={`ToDo ${isDone ? "ToDo--Done" : ""}`}>
+    <div
+      className={`ToDo ${isDone ? "ToDo--Done" : ""}`}
+      ref={ref}
+      style={style}
+    >
+      <div className="ToDo__DragArea" {...dragListeners} {...dragAttributes}>
+        <Icon lucideIcon={<Grip />} />
+      </div>
+
       <label className="ToDo__Content">
         <Checkbox checked={isDone} onChange={onToggle} />
         {isInEditMode ? (
@@ -76,12 +87,10 @@ export function ToDo({
           </form>
         ) : isDone ? (
           <div className="ToDo__Text">
-            <Draggable id={createdAt} className="ToDo__DraggableArea" />
             <Text as="del">{text}</Text>
           </div>
         ) : (
           <div className="ToDo__Text">
-            <Draggable id={createdAt} className="ToDo__DraggableArea" />
             <Text as="p">{text}</Text>
           </div>
         )}

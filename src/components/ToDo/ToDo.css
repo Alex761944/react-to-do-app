@@ -3,9 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--size-m);
   gap: var(--size-l);
+  padding: var(--size-m);
+  background-color: var(--todo-background);
   border: var(--border-size) var(--border-style-secondary) var(--border-color);
+}
+
+.ToDo__DragArea {
+  cursor: grab;
 }
 
 .ToDo__Content {
@@ -17,14 +22,7 @@
 }
 
 .ToDo__Text {
-  position: relative;
   width: 100%;
-}
-
-.ToDo__DraggableArea {
-  position: absolute;
-  width: 100%;
-  height: 100%;
 }
 
 .ToDo__Actions {

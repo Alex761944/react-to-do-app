@@ -225,7 +225,7 @@ function App() {
         </ToDoListHeader>
 
         <ToDoList>
-          <DndContext onDragEnd={handleToDoDragEnd}>
+          <DndContext autoScroll={false} onDragEnd={handleToDoDragEnd}>
             {columns.map((column, index) => (
               <Droppable key={index} id={column}>
                 <div className="Column">
@@ -238,38 +238,19 @@ function App() {
                     )
                     .sort(sortFunction)
                     .map((toDo) => (
-                      <>
-                        {toDo.isInEditMode ? (
+                      <Draggable key={toDo.createdAt} id={toDo.createdAt}>
+                        {({
+                          setNodeRef,
+                          listeners,
+                          attributes,
+                          transformStyle,
+                        }) => (
                           <li>
                             <ToDo
-                              text={toDo.text}
-                              priority={toDo.priority}
-                              createdAt={toDo.createdAt}
-                              isDone={toDo.isDone}
-                              isInEditMode={toDo.isInEditMode}
-                              onToggle={() => toggleToDo(toDo.createdAt)}
-                              handleTrashcanClick={() =>
-                                deleteToDo(toDo.createdAt)
-                              }
-                              handleSave={(newText, priority) =>
-                                saveToDo(
-                                  toDo.createdAt,
-                                  newText,
-                                  priority,
-                                  true
-                                )
-                              }
-                              handleEditClick={() => {
-                                editToDo(toDo.createdAt);
-                              }}
-                              handlePriorityChange={(newText, priority) =>
-                                saveToDo(toDo.createdAt, newText, priority)
-                              }
-                            />
-                          </li>
-                        ) : (
-                          <li key={toDo.createdAt}>
-                            <ToDo
+                              ref={setNodeRef}
+                              dragListeners={listeners}
+                              dragAttributes={attributes}
+                              style={transformStyle}
                               text={toDo.text}
                               priority={toDo.priority}
                               createdAt={toDo.createdAt}
@@ -296,7 +277,7 @@ function App() {
                             />
                           </li>
                         )}
-                      </>
+                      </Draggable>
                     ))}
                 </div>
               </Droppable>
@@ -336,40 +317,6 @@ function App() {
             }}
           />
         </div>
-      </div>
-
-      {/* Build dnd here */}
-
-      <div className="DND-Component">
-        <DndContext onDragEnd={handleDragEnd}>
-          {!droppedOver && (
-            <Draggable>
-              <Text>Draggable</Text>
-            </Draggable>
-          )}
-
-          <Droppable id={"area-1"}>
-            <div className="Area">
-              Area 1
-              {droppedOver === "area-1" && (
-                <Draggable>
-                  <Text>Draggable</Text>
-                </Draggable>
-              )}
-            </div>
-          </Droppable>
-
-          <Droppable id={"area-2"}>
-            <div className="Area">
-              Area 2
-              {droppedOver === "area-2" && (
-                <Draggable>
-                  <Text>Draggable</Text>
-                </Draggable>
-              )}
-            </div>
-          </Droppable>
-        </DndContext>
       </div>
     </>
   );
