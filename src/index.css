@@ -123,17 +123,21 @@ del {
   gap: var(--size-l);
 }
 
-.Area {
-  width: 300px;
-  height: 100px;
-  background-color: red;
-  border: 1px solid white;
-}
-
 .Column {
   display: flex;
   flex-direction: column;
-  gap: var(--size-l);
-  min-height: 200px;
   background-color: rgb(128, 128, 128, 0.2);
+}
+
+.Column__Header {
+  padding: var(--size-l) var(--size-l);
+  border-bottom: var(--border-size) var(--border-style) var(--border-color);
+}
+
+.Column__Area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-l);
+  padding: var(--size-l) var(--size-l);
+  min-height: 200px;
 }
