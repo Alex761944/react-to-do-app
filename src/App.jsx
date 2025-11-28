@@ -79,7 +79,7 @@ function App() {
         isDone: false,
         text: `New To Do`,
         isInEditMode: true,
-        createdAt: JSON.stringify(new Date()),
+        createdAt: new Date(),
         priority: "medium",
         column: column,
       },
