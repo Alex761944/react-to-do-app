@@ -9,7 +9,7 @@ import { FilterList } from "./components/FilterList/FilterList";
 import { Badge } from "./components/Badge/Badge";
 import { Filter } from "./components/Filter/Filter";
 import { Select } from "./components/Select/Select";
-import { Settings, SquarePlus } from "lucide-react";
+import { ChevronDown, ChevronUp, Settings, SquarePlus } from "lucide-react";
 import { Modal } from "./components/Modal/Modal";
 import { Icon } from "./components/Icon/Icon";
 
@@ -60,6 +60,21 @@ function App() {
     JSON.parse(localStorage.getItem("selected-filters")) || []
   );
 
+  const [expandedColumns, setExpandedColumns] = useState(
+    JSON.parse(localStorage.getItem("expanded-columns")) ||
+      columns.map((column) => column.handle)
+  );
+
+  function handleColumnHeaderClick(columnHandle) {
+    setExpandedColumns((prev) => {
+      if (prev.includes(columnHandle)) {
+        return [...prev.filter((prevColumn) => prevColumn !== columnHandle)];
+      } else {
+        return [...prev, columnHandle];
+      }
+    });
+  }
+
   useEffect(() => {
     localStorage.setItem("selected-sort-option", selectedSortOption);
   }, [selectedSortOption]);
@@ -71,6 +86,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("selected-filters", JSON.stringify(selectedFilters));
   }, [selectedFilters]);
+
+  useEffect(() => {
+    localStorage.setItem("expanded-columns", JSON.stringify(expandedColumns));
+  }, [expandedColumns]);
 
   function addToDo(column = "backlog") {
     setToDos((prev) => [
@@ -271,75 +290,100 @@ function App() {
         <ToDoList>
           <DndContext autoScroll={false} onDragEnd={handleToDoDragEnd}>
             {columns.map((column, index) => (
-              <div key={index} className="Column">
-                <div className="Column__Header">
-                  <Text as="h3" variant="heading-small">
-                    {column.title}
-                  </Text>
-                </div>
+              <Droppable key={index} id={column.handle}>
+                <div className="Column">
+                  <button
+                    onClick={() => handleColumnHeaderClick(column.handle)}
+                    className="Column__Header"
+                  >
+                    <Icon
+                      lucideIcon={
+                        expandedColumns.includes(column.handle) ? (
+                          <ChevronUp />
+                        ) : (
+                          <ChevronDown />
+                        )
+                      }
+                    />
 
-                <Droppable id={column.handle}>
-                  <div className="Column__Area">
-                    {toDos
-                      .filter((toDo) => toDo.column === column.handle)
-                      .filter(
-                        (toDo) =>
-                          selectedFilters.length === 0 ||
-                          selectedFilters.includes(toDo.priority)
+                    <Text as="h3" variant="heading-small">
+                      {column.title}
+                    </Text>
+
+                    <Text variant="body-medium" color="muted">
+                      (
+                      {toDos.reduce((toDoCount, toDo) => {
+                        return toDo.column === column.handle
+                          ? (toDoCount += 1)
+                          : toDoCount;
+                      }, 0)}
                       )
-                      .sort(sortFunction)
-                      .map((toDo) => (
-                        <Draggable key={toDo.createdAt} id={toDo.createdAt}>
-                          {({
-                            setNodeRef,
-                            listeners,
-                            attributes,
-                            transformStyle,
-                          }) => (
-                            <li>
-                              <ToDo
-                                ref={setNodeRef}
-                                dragListeners={listeners}
-                                dragAttributes={attributes}
-                                style={transformStyle}
-                                text={toDo.text}
-                                priority={toDo.priority}
-                                createdAt={toDo.createdAt}
-                                isDone={toDo.isDone}
-                                isInEditMode={toDo.isInEditMode}
-                                onToggle={() => toggleToDo(toDo.createdAt)}
-                                handleTrashcanClick={() =>
-                                  deleteToDo(toDo.createdAt)
-                                }
-                                handleSave={(newText, priority) =>
-                                  saveToDo(
-                                    toDo.createdAt,
-                                    newText,
-                                    priority,
-                                    true
-                                  )
-                                }
-                                handleEditClick={() => {
-                                  editToDo(toDo.createdAt);
-                                }}
-                                handlePriorityChange={(newText, priority) =>
-                                  saveToDo(toDo.createdAt, newText, priority)
-                                }
-                              />
-                            </li>
-                          )}
-                        </Draggable>
-                      ))}
+                    </Text>
+                  </button>
 
-                    <div className="Column__Actions">
-                      <Button
-                        icon={<Icon lucideIcon={<SquarePlus />} />}
-                        onClick={() => addToDo(column.handle)}
-                      />
+                  {expandedColumns.includes(column.handle) && (
+                    <div className="Column__Area">
+                      {toDos
+                        .filter((toDo) => toDo.column === column.handle)
+                        .filter(
+                          (toDo) =>
+                            selectedFilters.length === 0 ||
+                            selectedFilters.includes(toDo.priority)
+                        )
+                        .sort(sortFunction)
+                        .map((toDo) => (
+                          <Draggable key={toDo.createdAt} id={toDo.createdAt}>
+                            {({
+                              setNodeRef,
+                              listeners,
+                              attributes,
+                              transformStyle,
+                            }) => (
+                              <li>
+                                <ToDo
+                                  ref={setNodeRef}
+                                  dragListeners={listeners}
+                                  dragAttributes={attributes}
+                                  style={transformStyle}
+                                  text={toDo.text}
+                                  priority={toDo.priority}
+                                  createdAt={toDo.createdAt}
+                                  isDone={toDo.isDone}
+                                  isInEditMode={toDo.isInEditMode}
+                                  onToggle={() => toggleToDo(toDo.createdAt)}
+                                  handleTrashcanClick={() =>
+                                    deleteToDo(toDo.createdAt)
+                                  }
+                                  handleSave={(newText, priority) =>
+                                    saveToDo(
+                                      toDo.createdAt,
+                                      newText,
+                                      priority,
+                                      true
+                                    )
+                                  }
+                                  handleEditClick={() => {
+                                    editToDo(toDo.createdAt);
+                                  }}
+                                  handlePriorityChange={(newText, priority) =>
+                                    saveToDo(toDo.createdAt, newText, priority)
+                                  }
+                                />
+                              </li>
+                            )}
+                          </Draggable>
+                        ))}
+
+                      <div className="Column__Actions">
+                        <Button
+                          icon={<Icon lucideIcon={<SquarePlus />} />}
+                          onClick={() => addToDo(column.handle)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Droppable>
-              </div>
+                  )}
+                </div>
+              </Droppable>
             ))}
           </DndContext>
         </ToDoList>

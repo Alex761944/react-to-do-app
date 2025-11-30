@@ -91,6 +91,13 @@ del {
   color: var(--text-color-muted);
 }
 
+button {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .u-Hidden {
   display: none !important;
 }
@@ -129,7 +136,14 @@ del {
 }
 
 .Column__Header {
+  display: flex;
+  align-items: center;
+  gap: var(--size-s);
   padding: var(--size-l) var(--size-l);
+  text-align: left;
+}
+
+.Column__Header:has(~ .Column__Area) {
   border-bottom: var(--border-size) var(--border-style) var(--border-color);
 }
 
